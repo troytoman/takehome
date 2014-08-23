@@ -16,6 +16,34 @@ hash like so:
 The spec for the REST service is defined below.
 
 
+Installation
+=============
+
+NOTE: This code was written and tested under Python 2.7
+
+To start the rest service running on http://127.0.0.1:5000/
+
+```
+pip install -r requirements.txt
+python takehome.py
+```
+
+Some sample requests that can be run:
+```
+curl -i -X POST http://127.0.0.1:5000/groups/grp1
+curl -i -X POST http://127.0.0.1:5000/groups/grp2
+curl -i -H "Content-Type: application/json" -X POST -d '{"first_name": "Jim", last_name": "Jones", "userid": "jjones", "groups": ["grp1", "grp2"]}' http://127.0.0.1:5000/users/jjones
+curl -i -X GET http://127.0.0.1:5000/users/jjones
+curl -i -X GET http://127.0.0.1:5000/users/grp1
+```
+
+To run the unit tests, enter the following commands:
+
+```
+pip install -r test-requirements.txt
+./run-tests.sh
+```
+
 
 API SPEC
 ==========
@@ -87,6 +115,7 @@ Implementation Notes:
   * Automate environment build through docker or vagrant. Didn't seem
     complicated enough to warrant the work here.
   * Complete examples in API Spec with full return samples
+  * Better packaging. Not quite a full python Package setup here.
 2. Tried to keep as true to the spec as possible. But, I would make a
    couple of API changes if possible.
   * I would change the users POST route so that it just went to '/users' vs '/users/<userid>'

@@ -1,0 +1,7 @@
+coverage
+pytest
+pytest-cov
+pytest-xdist
+pylint
+pep8
+nose

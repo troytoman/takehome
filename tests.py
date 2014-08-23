@@ -55,6 +55,17 @@ class ApiTestCase(unittest.TestCase):
                            content_type='application/json')
         self.assertEqual(rv.status_code, 409)
 
+    def test_user_badreq(self):
+        newuser = json.dumps({"first_name": "Jim",
+                              "last_name": "Jones",
+                              "userid": "jjones",
+                              "groups": ["grp1", "grp2"]
+                              })
+        rv = self.app.post('/users/jimj',
+                           data=newuser,
+                           content_type='application/json')
+        self.assertEqual(rv.status_code, 400)
+
     def test_user_delete(self):
         rv = self.app.delete('/users/jjones')
         self.assertEqual(rv.status_code, 204)
@@ -90,6 +101,17 @@ class ApiTestCase(unittest.TestCase):
     def tests_group_delete_badgroup(self):
         rv = self.app.delete('/groups/nogroup')
         self.assertEqual(rv.status_code, 404)
+
+    def test_group_mod(self):
+        self.app.post('/groups/grp4')
+        newgroup = json.dumps({"users": ['jjones']})
+        rv = self.app.put('/groups/grp4',
+                          data=newgroup,
+                          content_type='application/json')
+        self.assertEqual(rv.status_code, 200)
+        resp = json.loads(rv.data)
+        self.assertEqual(resp['users'], ['jjones'])
+
 
 if __name__ == '__main__':
     unittest.main()

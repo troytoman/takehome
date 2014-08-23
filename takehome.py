@@ -32,7 +32,7 @@ def get_user(userid):
 
 @app.route('/users/<userid>', methods=['POST'])
 def add_user(userid):
-    if not request.json:
+    if not request.json or userid != request.json['userid']:
         abort(400)
     user = find_user(userid)
     if user:
@@ -62,8 +62,6 @@ def delete_user(userid):
 
 @app.route('/groups/<group>', methods=['GET'])
 def get_group(group):
-    print(group)
-    print(users)
     if group in groups:
         result = find_group_users(group)
         if result == []:
@@ -82,11 +80,29 @@ def add_group(group):
         return jsonify({'result': True}), 201
 
 
+@app.route('/groups/<group>', methods=['PUT'])
+def mod_group(group):
+    if not request.json:
+        abort(400)
+    userlist = []
+    if group in groups:
+        for u in users:
+            if group in u['groups']:
+                u['groups'].remove(group)
+            if u['userid'] in request.json['users']:
+                userlist.append(u['userid'])
+                u['groups'].append(u['userid'])
+        return jsonify({'users': userlist}), 200
+    else:
+        abort(404)
+
+
 @app.route('/groups/<group>', methods=['DELETE'])
 def delete_group(group):
     if group in groups:
         for u in users:
-            u['groups'].remove(group)
+            if group in u['groups']:
+                u['groups'].remove(group)
         return jsonify({'result': True}), 204
     else:
         abort(404)

@@ -36,7 +36,8 @@ POST /users/<userid>
 
 ```
 DELETE /users/<userid>
-    Deletes a user record. A successful DELETE will return a 204. Returns 404 if the user doesn't exist.
+    Deletes a user record. A successful DELETE will return a 204. Returns 404
+    if the user doesn't exist.
 ```
 
 ```
@@ -48,8 +49,9 @@ PUT /users/<userid>
 
 ```
 GET /groups/<group name>
-    Returns a JSON list of userids containing the members of that group. Service will return
-    a 404 if the group doesn't exist or has no members. Format of the response should look like:
+    Returns a JSON list of userids containing the members of that group.
+    Service will return a 404 if the group doesn't exist or has no members.
+    Format of the response should look like:
 ```
 ```json
 {
@@ -67,12 +69,9 @@ PUT /groups/<group name>
     Updates the membership list for the group. The body of the request should 
     be a JSON list describing the group's members. An example of a request would
     be:
-```
-```json
 {
     "users": ['jjones', 'jjs']
 }
-```
 
 ```
 DELETE /groups/<group name>

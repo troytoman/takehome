@@ -80,7 +80,8 @@ DELETE /groups/<group name>
 Implementation Notes:
 
 1. What I would do next:
-  * Tailor response messages to provide more detail (e.g. 400 error when userid mismatched in URL vs. json)
+  * Tailor response messages to provide more detail 
+  (e.g. 400 error when userid mismatched in URL vs. json)
   * Test more of the response data and other error conditions
   * Beef up the validation of incoming json requests
   * Automate environment build through docker or vagrant. Didn't seem complicated enough to do it here.

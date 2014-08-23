@@ -47,13 +47,11 @@ PUT /users/<userid>
     return of 409. PUTs to a non-existant user should return a 404.
 ```
 
-```
+```json
 GET /groups/<group name>
     Returns a JSON list of userids containing the members of that group.
     Service will return a 404 if the group doesn't exist or has no members.
     Format of the response should look like:
-```
-```json
 {
   "users": ["jjones", "jjs"]
 }

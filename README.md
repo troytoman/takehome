@@ -47,7 +47,7 @@ PUT /users/<userid>
     return of 409. PUTs to a non-existant user should return a 404.
 ```
 
-```json
+```
 GET /groups/<group name>
     Returns a JSON list of userids containing the members of that group.
     Service will return a 404 if the group doesn't exist or has no members.
@@ -81,11 +81,18 @@ Implementation Notes:
 
 1. What I would do next:
   * Tailor response messages to provide more detail 
-  (e.g. 400 error when userid mismatched in URL vs. json)
+    (e.g. 400 error when userid mismatched in URL vs. json)
   * Test more of the response data and other error conditions
   * Beef up the validation of incoming json requests
-  * Automate environment build through docker or vagrant. Didn't seem complicated enough to do it here.
-2. Tried to keep as true to the spec as possible. But, I would make a couple of API changes if possible.
-  * I would change the users POST route so that it just went to '/users' vs '/users/<userid>' since the userid is already in the json request body
-  * I would clarify groups spec a bit more. A GET on groups returns a 404 if it either doesn't exist or if it doesn't have any members. So, it's not exactly clear which is true. Also, does DELETE get rid of the group or only remove members? Spec just says members so I left the group alive. But, that means there is no way to delete a group once it exists.
+  * Automate environment build through docker or vagrant. Didn't seem
+    complicated enough to warrant the work here.
+  * Complete examples in API Spec with full return samples
+2. Tried to keep as true to the spec as possible. But, I would make a
+   couple of API changes if possible.
+  * I would change the users POST route so that it just went to '/users' vs '/users/<userid>'
+    since the userid is already in the json request body
+  * I would clarify groups spec a bit more. A GET on groups returns a 404 if it either
+    doesn't exist or if it doesn't have any members. So, it's not exactly clear which is true.
+    Also, does DELETE get rid of the group or only remove members? Spec just says members so
+    I left the group alive. But, that means there is no way to delete a group once it exists.
   * Perhaps a GET /groups (and maybe /users) to get all members of each.

@@ -87,9 +87,20 @@ class ApiTestCase(unittest.TestCase):
                               "groups": ['grp1']
                               })
         rv = self.app.put('/users/jjs',
-                          data=modgroup,
+                          data=moduser,
                           content_type='application/json')
         self.assertEqual(rv.status_code, 200)
+
+    def test_mod_nonuser(self):
+        moduser = json.dumps({"first_name": "No",
+                              "last_name": "One",
+                              "userid": "noone",
+                              "groups": ['grp1']
+                              })
+        rv = self.app.put('/users/noone',
+                          data=moduser,
+                          content_type='application/json')
+        self.assertEqual(rv.status_code, 404)
 
     def test_delete_nonuser(self):
         rv = self.app.delete('/users/noone')

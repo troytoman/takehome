@@ -50,6 +50,19 @@ def add_user(userid):
     return jsonify(newuser), 201
 
 
+@app.route('/users/<userid>', methods=['PUT'])
+def mod_user(userid):
+    if not request.json or userid != request.json['userid']:
+        abort(400)
+    for u in users:
+        if u['userid'] == request.json['userid']:
+            u['first_name'] = request.json['first_name']
+            u['last_name'] = request.json['last_name']
+            u['groups'] = request.json['groups']
+            return jsonify(u), 200
+    abort(404)
+
+
 @app.route('/users/<userid>', methods=['DELETE'])
 def delete_user(userid):
     user = find_user(userid)

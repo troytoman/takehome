@@ -24,6 +24,8 @@ NOTE: This code was written and tested under Python 2.7
 To start the rest service running on http://127.0.0.1:5000/
 
 ```
+git clone https://github.com/troytoman/takehome.git
+cd takehome
 pip install -r requirements.txt
 python takehome.py
 ```

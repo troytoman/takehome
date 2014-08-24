@@ -113,11 +113,12 @@ Implementation Notes:
   * Tailor response messages to provide more detail 
     (e.g. 400 error when userid mismatched in URL vs. json)
   * Test more of the response data and other error conditions
-  * Beef up the validation of incoming json requests
+  * ~~Beef up the validation of incoming json requests~~
   * Automate environment build through docker or vagrant. Didn't seem
     complicated enough to warrant the work here.
   * Complete examples in API Spec with full return samples
   * Better packaging. Not quite a full python Package setup here.
+  * Better docstrings for API in code
 2. Tried to keep as true to the spec as possible. But, I would make a
    couple of API changes if possible.
   * I would change the users POST route so that it just went to '/users' vs '/users/<userid>'

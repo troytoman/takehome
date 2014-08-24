@@ -55,7 +55,17 @@ class ApiTestCase(unittest.TestCase):
                            content_type='application/json')
         self.assertEqual(rv.status_code, 409)
 
-    def test_user_badreq(self):
+    def test_user_bad_req(self):
+        newuser = json.dumps({"first_name": "Jim",
+                              "userid": "jjones",
+                              "groups": ["grp1", "grp2"]
+                              })
+        rv = self.app.post('/users/jimj',
+                           data=newuser,
+                           content_type='application/json')
+        self.assertEqual(rv.status_code, 400)
+
+    def test_user_bad_id(self):
         newuser = json.dumps({"first_name": "Jim",
                               "last_name": "Jones",
                               "userid": "jjones",

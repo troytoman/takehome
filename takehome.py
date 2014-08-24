@@ -1,5 +1,6 @@
 #!flask/bin/python
 from flask import Flask, jsonify, abort, request
+import validictory
 
 app = Flask(__name__)
 
@@ -17,6 +18,22 @@ def find_group_users(group):
     return userlist
 
 
+def check_json_user_req(req, userid):
+    data = req.json
+    schema = {"type": "object",
+              "properties": {"first_name": {"type": "string"},
+                             "last_name": {"type": "string"},
+                             "userid": {"type": "string"},
+                             "groups": {"type": "array"}}
+              }
+    try:
+        validictory.validate(data, schema)
+    except:
+        abort(400)
+    if userid != request.json['userid']:
+        abort(400)
+
+
 @app.route('/users/<userid>', methods=['GET'])
 def get_user(userid):
     """
@@ -32,8 +49,7 @@ def get_user(userid):
 
 @app.route('/users/<userid>', methods=['POST'])
 def add_user(userid):
-    if not request.json or userid != request.json['userid']:
-        abort(400)
+    check_json_user_req(request, userid)
     user = find_user(userid)
     if user:
         abort(409)
@@ -52,8 +68,7 @@ def add_user(userid):
 
 @app.route('/users/<userid>', methods=['PUT'])
 def mod_user(userid):
-    if not request.json or userid != request.json['userid']:
-        abort(400)
+    check_json_user_req(request, userid)
     for u in users:
         if u['userid'] == request.json['userid']:
             u['first_name'] = request.json['first_name']
